@@ -58,67 +58,124 @@ void _printrules(){
     system("cls");
 }
 
-void _printmain(){
-    gotoxy(44,5);
+int _printmain(){
+    gotoxy(51,5);
     printf("                                                                        \n");
-    gotoxy(44,6);
+    gotoxy(51,6);
     printf("  _________      .__                 __      _________.__               \n");
-    gotoxy(44,7);
+    gotoxy(51,7);
     printf(" /   _____/ ____ |  |   ____   _____/  |_   /   _____/|__|_______ ____  \n");
-    gotoxy(44,8);
+    gotoxy(51,8);
     printf(" \\_____  \\_/ __ \\|  | _/ __ \\_/ ___\\   __\\  \\_____  \\ |  \\___   // __ \\ \n");
-    gotoxy(44,9);
+    gotoxy(51,9);
     printf(" /        \\  ___/|  |_\\  ___/\\  \___|  |    /        \\|  |/    /\\  ___/ \n");
-    gotoxy(44,10);
+    gotoxy(51,10);
     printf("/_______  /\\___  >____/\\___  >\\___  >__|   /_______  /|__/_____ \\___  >\n");
-    gotoxy(44,11);
+    gotoxy(51,11);
     printf("        \\/     \\/          \\/     \\/               \\/          \\/    \\/ \n");
-    gotoxy(44,12);
+    gotoxy(51,12);
     printf("                                                                        \n");
     Sleep(500);
-    gotoxy(25,20);
+
+    gotoxy(38,17);
     printf("   _____           _____  \n");
-    gotoxy(100,20);
+    gotoxy(110,17);
     printf(" .________        .________\n");
-    Sleep(500);
+    Sleep(150);
 
-    gotoxy(25,21);
+    gotoxy(38,18);
     printf("  /  |  |___  ___ /  |  | \n");
-    gotoxy(100,21);
+    gotoxy(110,18);
     printf(" |   ____/__  ___ |   ____/\n");
-    Sleep(500);
+    Sleep(150);
 
-    gotoxy(25,22);
+    gotoxy(38,19);
     printf(" /   |  |\\  \\/  //   |  |_\n");
-    gotoxy(100,22);
+    gotoxy(110,19);
     printf(" |____  \\\\  \\/  / |____  \\ \n");
-    Sleep(500);
+    Sleep(150);
 
-    gotoxy(25,23);
+    gotoxy(38,20);
     printf("/    ^   />    </    ^   /\n");
-    gotoxy(100,23);
+    gotoxy(110,20);
     printf(" /       \\>    <  /       \\ \n");
-    Sleep(500);
+    Sleep(150);
 
-    gotoxy(25,24);
+    gotoxy(38,21);
     printf("\\____   |/__/\\_ \\____   | \n");
-    gotoxy(100,24);
+    gotoxy(110,21);
     printf("/______  /__/\\_ \\/______  /\n");
-    Sleep(500);
+    Sleep(150);
 
-    gotoxy(25,25);
+    gotoxy(38,22);
     printf("     |__|      \\/    |__| \n");
-    gotoxy(100,25);
+    gotoxy(110,22);
     printf("       \\/      \\/       \\/ \n");
-    Sleep(500);
+    Sleep(150);
 
+    gotoxy(23,30);
+    printf("__________                                ________                     _____     __             _________ __                 __   \n");
+    gotoxy(23,31);
+    printf("\\______   \\_______   ____   ______ ______ \\_____  \    ___________     /  |  |  _/  |_  ____    /   _____//  |______ ________/  |_ \n");
+    gotoxy(23,32);
+    printf(" |     ___/\\_  __ \\_/ __ \\ /  ___//  ___/   _<__  <   /  _ \\\\_  __ \\\\   /   |  |_ \\   __\\/  _ \\   \\_____  \\\\   __\\__  \\\\_  __ \\   __\\ \n");
+    gotoxy(23,33);
+    printf(" |    |     |  | \\/\\  ___/ \\___ \\ \\___ \\   /       \\ <  <_> >  | \\/ /    ^   /  |  | <  <_> >  _______  \\|  |  / __ \\|  | \\/|  |  ");
+    gotoxy(23,34);
+    printf(" |____|     |__|    \\___  >____  >____  > /______  /  \\____/|__|    \\____   |   |__|  \\____/  /_______  /|__| (____  /__|   |__|  \n");
+    gotoxy(23,35);
+    printf("                        \\/     \\/     \\/         \\/                      |__|                         \\/           \\/             \n");
+
+    int n;
+    scanf("%d",&n);
+    system("cls");
+    return n;
+}
+
+void _play4x4(){
+    int rowstart = 30;
+    int rowend = 114;
+    int columnstart = 5;
+    int columnend = 47;
+    gotoxy(rowstart,columnstart);
+    printf("┏");
+    gotoxy(rowend,columnstart);
+    printf("┓");
+    for(int i=rowstart+1;i<=rowend-1;i++){
+        gotoxy(i,columnstart);
+        printf("─");
+    }
+    Sleep(50);
+    for(int i=columnstart+1;i<=columnend-1;i++){
+        gotoxy(rowstart,i);
+        printf("│");
+        gotoxy(rowend,i);
+        printf("│");
+        Sleep(50);
+    }
+    gotoxy(rowstart,columnend);
+    printf("└");
+    gotoxy(rowend,columnend);
+    printf("┛");
+    for(int i=rowstart+1;i<=rowend-1;i++){
+        gotoxy(i,columnend);
+        printf("─");
+    }
+    Sleep(500);
 }
 
 int main(){
     system("title 2048_in_C"); // 프로세스 이름
     system("mode con: cols=180 lines=50"); // !콘솔창 크기
     system("COLOR 0F"); //!배경색, 글자색
-    _printtitle();
-    _printrules();
-    _printmain();
+    //_printtitle();
+    //_printrules();
+    int selected_round;
+    selected_round = _printmain();
+    if(selected_round == 4){
+        _play4x4();
+    }
+    else{
+        //_play5x5();
+    }
 }
