@@ -4,10 +4,26 @@
 #include<windows.h>
 #include<string.h>
 #include<stdbool.h>
-
+#include<time.h>
+#include<conio.h>
+int arr4[4][4];
+int arr5[5][5];
+char numbers[15][10][10];
 void gotoxy(int x, int y){
     COORD Pos = {x,y};
     SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE),Pos);
+}
+
+int random16(){
+    return rand()%16;
+}
+
+int random2or4(){
+    int randint = rand()%10;
+    if (randint == 0){
+        return 4;
+    }
+    else return 2;
 }
 
 void _printtitle(){
@@ -114,29 +130,28 @@ int _printmain(){
     Sleep(150);
 
     gotoxy(23,30);
-    printf("__________                                ________                     _____     __             _________ __                 __   \n");
+    printf("__________                                   _____                   .________   __             _________ __                 __   \n");
     gotoxy(23,31);
-    printf("\\______   \\_______   ____   ______ ______ \\_____  \    ___________     /  |  |  _/  |_  ____    /   _____//  |______ ________/  |_ \n");
+    printf("\\______   \\_______   ____   ______ ______   /  |  |    ___________   |   ____/ _/  |_  ____    /   _____//  |______ ________/  |_ \n");
     gotoxy(23,32);
-    printf(" |     ___/\\_  __ \\_/ __ \\ /  ___//  ___/   _<__  <   /  _ \\\\_  __ \\\\   /   |  |_ \\   __\\/  _ \\   \\_____  \\\\   __\\__  \\\\_  __ \\   __\\ \n");
+    printf(" |     ___/\\_  __ \\_/ __ \\ /  ___//  ___/  /   |  |_  /  _ \\_  __ \\  |____  \\  \\   __\\/  _ \\   \\_____  \\\\   __\\__  \\\\_  __ \\   __\\ \n");
     gotoxy(23,33);
-    printf(" |    |     |  | \\/\\  ___/ \\___ \\ \\___ \\   /       \\ <  <_> >  | \\/ /    ^   /  |  | <  <_> >  _______  \\|  |  / __ \\|  | \\/|  |  ");
+    printf(" |    |     |  | \\/\\  ___/ \\___ \\ \\___ \\  /    ^   / (  <_> )  | \\/  /       \\  |  | (  <_> )  /        \\|  |  / __ \\|  | \\/|  |  \n");
     gotoxy(23,34);
-    printf(" |____|     |__|    \\___  >____  >____  > /______  /  \\____/|__|    \\____   |   |__|  \\____/  /_______  /|__| (____  /__|   |__|  \n");
+    printf(" |____|     |__|    \\___  >____  >____  > \\____   |   \\____/|__|    /______  /  |__|  \\____/  /_______  /|__| (____  /__|   |__|  \n");
     gotoxy(23,35);
-    printf("                        \\/     \\/     \\/         \\/                      |__|                         \\/           \\/             \n");
+    printf("                        \\/     \\/     \\/       |__|                        \\/                         \\/           \\/             \n");
 
-    int n;
-    scanf("%d",&n);
+    char c = _getch();
+    int n = c - '0';
+
     system("cls");
     return n;
 }
 
-void _play4x4(){
-    int rowstart = 30;
-    int rowend = 114;
-    int columnstart = 5;
-    int columnend = 47;
+void _write4x4standard(int rowstart, int rowend, int columnstart, int columnend){
+    gotoxy(rowstart+2,columnstart-1);
+    printf("12345678901234567890123456789012345678901234567890123456789012345678901234567890");
     gotoxy(rowstart,columnstart);
     printf("┏");
     gotoxy(rowend,columnstart);
@@ -164,9 +179,281 @@ void _play4x4(){
     Sleep(500);
 }
 
+void _print2(int rowstart,int colstart){
+    gotoxy(rowstart,colstart);
+    printf("   ────────────────┐  ");
+    gotoxy(rowstart,colstart+1);
+    printf("                   │");
+    gotoxy(rowstart,colstart+2);
+    printf("                   │");
+    gotoxy(rowstart,colstart+3);
+    printf("                   │");
+    gotoxy(rowstart,colstart+4);
+    printf("  ┌────────────────┘  ");
+    gotoxy(rowstart,colstart+5);
+    printf("  │                  ");
+    gotoxy(rowstart,colstart+6);
+    printf("  │                  ");
+    gotoxy(rowstart,colstart+7);
+    printf("  │                  ");
+    gotoxy(rowstart,colstart+8);
+    printf("  │                  ");
+    gotoxy(rowstart,colstart+9);
+    printf("  └────────────────  ");
+};
+
+void _print4(int rowstart,int colstart){
+    gotoxy(rowstart,colstart);
+    printf(" │        │");
+    gotoxy(rowstart,colstart+1);
+    printf(" │        │");
+    gotoxy(rowstart,colstart+2);
+    printf(" │        │");
+    gotoxy(rowstart,colstart+3);
+    printf(" │        │");
+    gotoxy(rowstart,colstart+4);
+    printf(" └────────┼───────");
+    gotoxy(rowstart,colstart+5);
+    printf("          │");
+    gotoxy(rowstart,colstart+6);
+    printf("          │");
+    gotoxy(rowstart,colstart+7);
+    printf("          │");
+    gotoxy(rowstart,colstart+8);
+    printf("          │");
+    gotoxy(rowstart,colstart+9);
+    printf("          │");
+};
+
+void _print8(int rowstart,int colstart){
+
+    gotoxy(rowstart,colstart);
+    printf(" ┌────────────────┐");
+    gotoxy(rowstart,colstart+1);
+    printf(" │                │");
+    gotoxy(rowstart,colstart+2);
+    printf(" │                │");
+    gotoxy(rowstart,colstart+3);
+    printf(" │                │");
+    gotoxy(rowstart,colstart+4);
+    printf(" ├────────────────┤");
+    gotoxy(rowstart,colstart+5);
+    printf(" │                │");
+    gotoxy(rowstart,colstart+6);
+    printf(" │                │");
+    gotoxy(rowstart,colstart+7);
+    printf(" │                │");
+    gotoxy(rowstart,colstart+8);
+    printf(" │                │");
+    gotoxy(rowstart,colstart+9);
+    printf(" └────────────────┘");
+};
+
+void _logicw4x4(){
+    while(1){
+        for(int i=1;i<4;i++){
+            for(int j=0;j<4;j++){
+                if(arr4[i-1][j] == 0){
+                    arr4[i-1][j] = arr4[i][j];
+                    arr4[i][j] = 0;
+                }
+                else if(arr4[i-1][j] != 0){
+                    if(arr4[i-1][j] == arr4[i][j]){
+                        arr4[i-1][j] = arr4[i][j]*2;
+                        arr4[i][j] = 0;
+                    }
+                }
+            }
+        }
+        int check = 0;
+        for(int i=1;i<4;i++){
+            for(int j=0;j<4;j++){
+                if((arr4[i][j] != 0 && arr4[i-1][j] == 0) || ((arr4[i][j] == arr4[i-1][j]) && arr4[i][j] != 0) ){
+                    check++;
+                }
+            }
+        }
+        if(check == 0){
+            break;
+        }
+    }
+}
+
+void _logica4x4(){
+    while(1){
+        for(int i=0;i<4;i++){
+            for(int j=1;j<4;j++){
+                if(arr4[i][j-1] == 0){
+                    arr4[i][j-1] = arr4[i][j];
+                    arr4[i][j] = 0;
+                }
+                else if(arr4[i][j-1] != 0){
+                    if(arr4[i][j-1] == arr4[i][j]){
+                        arr4[i][j-1] = arr4[i][j]*2;
+                        arr4[i][j] = 0;
+                    }
+                }
+            }
+        }
+        int check = 0;
+        for(int i=0;i<4;i++){
+            for(int j=1;j<4;j++){
+                if((arr4[i][j] != 0 && arr4[i][j-1] == 0) || ((arr4[i][j] == arr4[i][j-1]) && arr4[i][j] != 0) ){
+                    check++;
+                }
+            }
+        }
+        if(check == 0){
+            break;
+        }
+    }
+}
+
+void _logics4x4(){
+    while(1){
+        for(int i=0;i<3;i++){
+            for(int j=0;j<4;j++){
+                if(arr4[i+1][j] == 0){
+                    arr4[i+1][j] = arr4[i][j];
+                    arr4[i][j] = 0;
+                }
+                else if(arr4[i+1][j] != 0){
+                    if(arr4[i+1][j] == arr4[i][j]){
+                        arr4[i+1][j] = arr4[i][j]*2;
+                        arr4[i][j] = 0;
+                    }
+                }
+            }
+        }
+        int check = 0;
+        for(int i=0;i<3;i++){
+            for(int j=0;j<4;j++){
+                if((arr4[i][j] != 0 && arr4[i+1][j] == 0) || ((arr4[i][j] == arr4[i+1][j]) && arr4[i][j] != 0) ){
+                    check++;
+                }
+            }
+        }
+        if(check == 0){
+            break;
+        }
+    }
+}
+
+void _logicd4x4(){
+    while(1){
+        for(int i=0;i<4;i++){
+            for(int j=0;j<3;j++){
+                if(arr4[i][j+1] == 0){
+                    arr4[i][j+1] = arr4[i][j];
+                    arr4[i][j] = 0;
+                }
+                else if(arr4[i][j+1] != 0){
+                    if(arr4[i][j+1] == arr4[i][j]){
+                        arr4[i][j+1] = arr4[i][j]*2;
+                        arr4[i][j] = 0;
+                    }
+                }
+            }
+        }
+        int check = 0;
+        for(int i=0;i<4;i++){
+            for(int j=0;j<3;j++){
+                if((arr4[i][j] != 0 && arr4[i][j+1] == 0) || ((arr4[i][j] == arr4[i][j+1]) && arr4[i][j] != 0) ){
+                    check++;
+                }
+            }
+        }
+        if(check == 0){
+            break;
+        }
+    }
+}
+
+void _logicaddnewnum4x4(){
+    int n = rand()%10;
+    int howmanyadd;
+    if(0<=n && n <= 6) howmanyadd = 1;
+    else howmanyadd = 0;
+
+    int newpos1;
+    int newpos2;
+    int newnum1 = random2or4();
+    int newnum2 = random2or4();
+    if(howmanyadd == 2){
+        while(1){
+            newpos1 = random16();
+            if(arr4[newpos1/4][newpos1%4] == 0){
+                break;
+            }
+        }
+        arr4[newpos1/4][newpos1%4] = newnum1;
+        while(1){
+            newpos2 = random16();
+            if(arr4[newpos2/4][newpos2%4] == 0){
+                break;
+            }
+        }
+        arr4[newpos2/4][newpos2%4] = newnum2;
+    }
+    else if(howmanyadd == 1){
+        while(1){
+            newpos1 = random16();
+            if(arr4[newpos1/4][newpos1%4] == 0){
+                break;
+            }
+        }
+        arr4[newpos1/4][newpos1%4] = newnum1;
+    }
+}
+
+void _print4x4(){
+    for(int i=0;i<4;i++){
+        for(int j=0;j<4;j++){
+            printf("%d ",arr4[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+void _play4x4(){
+    // 31~50, 51~70, 71~90, 91~110
+    // 3~12, 13~22, 23~32, 33~42
+    int rowstart = 30;
+    int rowend = 112;
+    int columnstart = 2;
+    int columnend = 44;
+    //_write4x4standard(rowstart,rowend,columnstart,columnend);
+    int startingpos1=random16();
+    int startingpos2=random16();
+    int startingnum1 = random2or4();
+    int startingnum2 = random2or4();
+    arr4[startingpos1 / 4][startingnum1 % 4] = startingnum1;
+    arr4[startingpos2 / 4][startingnum2 % 4] = startingnum2;
+    _print4x4();
+    while(1){
+        char inputkey;
+        inputkey = _getch();
+        if(inputkey == 'w'){
+            _logicw4x4();
+        }
+        else if(inputkey == 'a'){
+            _logica4x4();
+        }
+        else if(inputkey == 's'){
+            _logics4x4();
+        }
+        else if(inputkey == 'd'){
+            _logicd4x4();
+        }
+        _logicaddnewnum4x4();
+        _print4x4();
+    }
+}
+
 int main(){
+    srand(time(NULL));
     system("title 2048_in_C"); // 프로세스 이름
-    system("mode con: cols=180 lines=50"); // !콘솔창 크기
+    system("mode con: cols=180 lines=60"); // !콘솔창 크기
     system("COLOR 0F"); //!배경색, 글자색
     //_printtitle();
     //_printrules();

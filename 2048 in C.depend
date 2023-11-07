@@ -1,8 +1,10 @@
 # depslib dependency file v1.0
-1699337128 source:c:\users\d0yxn\desktop\2048 in c\main.c
+1699365006 source:c:\users\d0yxn\desktop\2048 in c\main.c
 	<stdio.h>
 	<stdlib.h>
 	<windows.h>
 	<string.h>
 	<stdbool.h>
+	<time.h>
+	<conio.h>
 
