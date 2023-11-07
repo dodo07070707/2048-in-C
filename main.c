@@ -8,6 +8,8 @@
 #include<conio.h>
 int arr4[4][4];
 int arr5[5][5];
+int checkarr4[4][4];
+int checkarr5[5][5];
 char numbers[15][10][10];
 void gotoxy(int x, int y){
     COORD Pos = {x,y};
@@ -249,6 +251,14 @@ void _print8(int rowstart,int colstart){
     printf(" 戌式式式式式式式式式式式式式式式式戎");
 };
 
+void _resetcheckarr4x4(){
+    for(int i=0;i<4;i++){
+        for(int j=0;j<4;j++){
+            checkarr4[i][j] = 0;
+        }
+    }
+}
+
 void _logicw4x4(){
     while(1){
         for(int i=1;i<4;i++){
@@ -256,11 +266,15 @@ void _logicw4x4(){
                 if(arr4[i-1][j] == 0){
                     arr4[i-1][j] = arr4[i][j];
                     arr4[i][j] = 0;
+                    checkarr4[i-1][j] = checkarr4[i][j];
+                    checkarr4[i][j] = 0;
                 }
                 else if(arr4[i-1][j] != 0){
                     if(arr4[i-1][j] == arr4[i][j]){
                         arr4[i-1][j] = arr4[i][j]*2;
                         arr4[i][j] = 0;
+                        checkarr4[i-1][j] = 1;
+                        checkarr4[i][j] = 0;
                     }
                 }
             }
@@ -268,12 +282,13 @@ void _logicw4x4(){
         int check = 0;
         for(int i=1;i<4;i++){
             for(int j=0;j<4;j++){
-                if((arr4[i][j] != 0 && arr4[i-1][j] == 0) || ((arr4[i][j] == arr4[i-1][j]) && arr4[i][j] != 0) ){
+                if((arr4[i][j] != 0 && arr4[i-1][j] == 0) || (((arr4[i][j] == arr4[i-1][j]) && arr4[i][j] != 0 ) && (checkarr4[i][j] ==0 &&checkarr4[i-1][j] == 0) )){
                     check++;
                 }
             }
         }
         if(check == 0){
+            _resetcheckarr4x4();
             break;
         }
     }
@@ -286,11 +301,15 @@ void _logica4x4(){
                 if(arr4[i][j-1] == 0){
                     arr4[i][j-1] = arr4[i][j];
                     arr4[i][j] = 0;
+                    checkarr4[i][j-1] = checkarr4[i][j];
+                    checkarr4[i][j] = 0;
                 }
                 else if(arr4[i][j-1] != 0){
                     if(arr4[i][j-1] == arr4[i][j]){
                         arr4[i][j-1] = arr4[i][j]*2;
                         arr4[i][j] = 0;
+                        checkarr4[i][j-1] = 1;
+                        checkarr4[i][j] = 0;
                     }
                 }
             }
@@ -298,12 +317,13 @@ void _logica4x4(){
         int check = 0;
         for(int i=0;i<4;i++){
             for(int j=1;j<4;j++){
-                if((arr4[i][j] != 0 && arr4[i][j-1] == 0) || ((arr4[i][j] == arr4[i][j-1]) && arr4[i][j] != 0) ){
+                if((arr4[i][j] != 0 && arr4[i][j-1] == 0) || (((arr4[i][j] == arr4[i][j-1]) && arr4[i][j] != 0 ) && (checkarr4[i][j] ==0 &&checkarr4[i][j-1] == 0) )){
                     check++;
                 }
             }
         }
         if(check == 0){
+            _resetcheckarr4x4();
             break;
         }
     }
@@ -311,16 +331,20 @@ void _logica4x4(){
 
 void _logics4x4(){
     while(1){
-        for(int i=0;i<3;i++){
+        for(int i=2;i>=0;i--){
             for(int j=0;j<4;j++){
                 if(arr4[i+1][j] == 0){
                     arr4[i+1][j] = arr4[i][j];
                     arr4[i][j] = 0;
+                    checkarr4[i+1][j] = checkarr4[i][j];
+                    checkarr4[i][j] = 0;
                 }
                 else if(arr4[i+1][j] != 0){
                     if(arr4[i+1][j] == arr4[i][j]){
                         arr4[i+1][j] = arr4[i][j]*2;
                         arr4[i][j] = 0;
+                        checkarr4[i+1][j] = 1;
+                        checkarr4[i][j] = 0;
                     }
                 }
             }
@@ -328,12 +352,13 @@ void _logics4x4(){
         int check = 0;
         for(int i=0;i<3;i++){
             for(int j=0;j<4;j++){
-                if((arr4[i][j] != 0 && arr4[i+1][j] == 0) || ((arr4[i][j] == arr4[i+1][j]) && arr4[i][j] != 0) ){
+                if((arr4[i][j] != 0 && arr4[i+1][j] == 0) || (((arr4[i][j] == arr4[i+1][j]) && arr4[i][j] != 0 ) && (checkarr4[i][j] ==0 &&checkarr4[i+1][j] == 0) )){
                     check++;
                 }
             }
         }
         if(check == 0){
+            _resetcheckarr4x4();
             break;
         }
     }
@@ -342,15 +367,19 @@ void _logics4x4(){
 void _logicd4x4(){
     while(1){
         for(int i=0;i<4;i++){
-            for(int j=0;j<3;j++){
+            for(int j=2;j>=0;j--){
                 if(arr4[i][j+1] == 0){
                     arr4[i][j+1] = arr4[i][j];
                     arr4[i][j] = 0;
+                    checkarr4[i][j+1] = checkarr4[i][j];
+                    checkarr4[i][j] = 0;
                 }
                 else if(arr4[i][j+1] != 0){
                     if(arr4[i][j+1] == arr4[i][j]){
                         arr4[i][j+1] = arr4[i][j]*2;
                         arr4[i][j] = 0;
+                        checkarr4[i][j+1] = 1;
+                        checkarr4[i][j] = 0;
                     }
                 }
             }
@@ -358,12 +387,13 @@ void _logicd4x4(){
         int check = 0;
         for(int i=0;i<4;i++){
             for(int j=0;j<3;j++){
-                if((arr4[i][j] != 0 && arr4[i][j+1] == 0) || ((arr4[i][j] == arr4[i][j+1]) && arr4[i][j] != 0) ){
+                if((arr4[i][j] != 0 && arr4[i][j+1] == 0) || (((arr4[i][j] == arr4[i][j+1]) && arr4[i][j] != 0 ) && (checkarr4[i][j] ==0 &&checkarr4[i][j+1] == 0) )){
                     check++;
                 }
             }
         }
         if(check == 0){
+            _resetcheckarr4x4();
             break;
         }
     }
