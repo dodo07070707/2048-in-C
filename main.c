@@ -11,6 +11,7 @@ int arr5[5][5];
 int checkarr4[4][4];
 int checkarr5[5][5];
 int checkifchanged=0;
+int highscore4x4=0;
 int score4x4=0;
 char numbers[15][10][10];
 void gotoxy(int x, int y){
@@ -433,6 +434,41 @@ void _logicaddnewnum4x4(){
     arr4[newpos1/4][newpos1%4] = newnum1;
 }
 
+int _checkifclear4x4(){
+    int check = 0;
+    for(int i=0;i<4;i++){
+        for(int j=0;j<4;j++){
+            if(arr4[i][j] == 16){
+                check = 1;
+            }
+        }
+    }
+    if(check == 1) return 1;
+    else return 0;
+}
+
+void _printclearscreen(int n){
+    system("cls");
+    gotoxy(45,5);
+    printf("_________                                     __        .__          __  .__           ");
+    gotoxy(45,6);
+    printf("\\_   ___ \\  ____   ____    ________________ _/  |_ __ __|  | _____ _/  |_|__| ____   ____  ");
+    gotoxy(45,7);
+    printf("/    \\  \\/ /  _ \\ /    \\  / ___\\_  __ \\__  \\\\   __\\  |  \\  | \\__  \\\\   __\\  |/  _ \\ /    \\ ");
+    gotoxy(45,8);
+    printf("\\     \\___(  <_> )   |  \\/ /_/  >  | \\// __ \\|  | |  |  /  |__/ __ \\|  | |  (  <_> )   |  \\");
+    gotoxy(45,9);
+    printf(" \\______  /\\____/|___|  /\\___  /|__|  (____  /__| |____/|____(____  /__| |__|\\____/|___|  /");
+    gotoxy(45,10);
+    printf("        \\/            \\//_____/            \\/                     \\/                    \\/ ");
+    gotoxy(62,15);
+    printf("Your Score : %d",score4x4);
+    gotoxy(98,15);
+    if(score4x4 > highscore4x4) highscore4x4 = score4x4;
+    printf("High Score : %d",highscore4x4);
+
+}
+
 void _print4x4(){
     for(int i=0;i<4;i++){
         for(int j=0;j<4;j++){
@@ -443,6 +479,7 @@ void _print4x4(){
     printf("\n");
     printf("score : %d\n",score4x4);
 }
+
 void _play4x4(){
     // 31~50, 51~70, 71~90, 91~110
     // 3~12, 13~22, 23~32, 33~42
@@ -476,6 +513,11 @@ void _play4x4(){
         if(checkifchanged != 0) _logicaddnewnum4x4();
         checkifchanged = 0;
         _print4x4();
+        int ischecked = _checkifclear4x4();
+        if(ischecked == 1){
+            _printclearscreen(4);
+            break;
+        }
     }
 }
 
