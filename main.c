@@ -11,6 +11,7 @@ int arr5[5][5];
 int checkarr4[4][4];
 int checkarr5[5][5];
 int checkifchanged=0;
+int score4x4=0;
 char numbers[15][10][10];
 void gotoxy(int x, int y){
     COORD Pos = {x,y};
@@ -260,6 +261,10 @@ void _resetcheckarr4x4(){
     }
 }
 
+void _scoreadd4x4(int n){
+    score4x4 = score4x4 + n;
+}
+
 void _logicw4x4(){
     while(1){
         for(int i=1;i<4;i++){
@@ -278,6 +283,7 @@ void _logicw4x4(){
                         checkarr4[i-1][j] = 1;
                         checkarr4[i][j] = 0;
                         checkifchanged++;
+                        _scoreadd4x4(arr4[i-1][j]);
                     }
                 }
             }
@@ -315,6 +321,7 @@ void _logica4x4(){
                         checkarr4[i][j-1] = 1;
                         checkarr4[i][j] = 0;
                         checkifchanged++;
+                        _scoreadd4x4(arr4[i][j-1]);
                     }
                 }
             }
@@ -352,6 +359,7 @@ void _logics4x4(){
                         checkarr4[i+1][j] = 1;
                         checkarr4[i][j] = 0;
                         checkifchanged++;
+                        _scoreadd4x4(arr4[i+1][j]);
                     }
                 }
             }
@@ -389,6 +397,7 @@ void _logicd4x4(){
                         checkarr4[i][j+1] = 1;
                         checkarr4[i][j] = 0;
                         checkifchanged++;
+                        _scoreadd4x4(arr4[i][j+1]);
                     }
                 }
             }
@@ -432,6 +441,7 @@ void _print4x4(){
         printf("\n");
     }
     printf("\n");
+    printf("score : %d\n",score4x4);
 }
 void _play4x4(){
     // 31~50, 51~70, 71~90, 91~110
