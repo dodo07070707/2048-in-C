@@ -13,6 +13,8 @@ int checkarr5[5][5];
 int checkifchanged=0;
 int highscore4x4=0;
 int score4x4=0;
+int highscore5x5=0;
+int score5x5=0;
 char numbers[15][10][10];
 void gotoxy(int x, int y){
     COORD Pos = {x,y};
@@ -262,8 +264,20 @@ void _resetcheckarr4x4(){
     }
 }
 
+void _resetcheckarr5x5(){
+    for(int i=0;i<5;i++){
+        for(int j=0;j<5;j++){
+            checkarr5[i][j] = 0;
+        }
+    }
+}
+
 void _scoreadd4x4(int n){
     score4x4 = score4x4 + n;
+}
+
+void _scoreadd5x5(int n){
+    score5x5 = score5x5 + n;
 }
 
 void _logicw4x4(){
@@ -299,6 +313,44 @@ void _logicw4x4(){
         }
         if(check == 0){
             _resetcheckarr4x4();
+            break;
+        }
+    }
+}
+
+void _logicw5x5(){
+    while(1){
+        for(int i=1;i<5;i++){
+            for(int j=0;j<5;j++){
+                if(arr5[i-1][j] == 0){
+                    arr5[i-1][j] = arr5[i][j];
+                    arr5[i][j] = 0;
+                    checkarr5[i-1][j] = checkarr5[i][j];
+                    checkarr5[i][j] = 0;
+                    checkifchanged++;
+                }
+                else if(arr5[i-1][j] != 0){
+                    if(arr5[i-1][j] == arr5[i][j]){
+                        arr5[i-1][j] = arr5[i][j]*2;
+                        arr5[i][j] = 0;
+                        checkarr5[i-1][j] = 1;
+                        checkarr5[i][j] = 0;
+                        checkifchanged++;
+                        _scoreadd5x5(arr5[i-1][j]);
+                    }
+                }
+            }
+        }
+        int check = 0;
+        for(int i=1;i<5;i++){
+            for(int j=0;j<5;j++){
+                if((arr5[i][j] != 0 && arr5[i-1][j] == 0) || (((arr5[i][j] == arr5[i-1][j]) && arr5[i][j] != 0 ) && (checkarr5[i][j] ==0 &&checkarr5[i-1][j] == 0) )){
+                    check++;
+                }
+            }
+        }
+        if(check == 0){
+            _resetcheckarr5x5();
             break;
         }
     }
@@ -342,6 +394,44 @@ void _logica4x4(){
     }
 }
 
+void _logica5x5(){
+    while(1){
+        for(int i=0;i<5;i++){
+            for(int j=1;j<5;j++){
+                if(arr5[i][j-1] == 0){
+                    arr5[i][j-1] = arr5[i][j];
+                    arr5[i][j] = 0;
+                    checkarr5[i][j-1] = checkarr5[i][j];
+                    checkarr5[i][j] = 0;
+                    checkifchanged++;
+                }
+                else if(arr5[i][j-1] != 0){
+                    if(arr5[i][j-1] == arr5[i][j]){
+                        arr5[i][j-1] = arr5[i][j]*2;
+                        arr5[i][j] = 0;
+                        checkarr5[i][j-1] = 1;
+                        checkarr5[i][j] = 0;
+                        checkifchanged++;
+                        _scoreadd4x4(arr5[i][j-1]);
+                    }
+                }
+            }
+        }
+        int check = 0;
+        for(int i=0;i<5;i++){
+            for(int j=1;j<5;j++){
+                if((arr5[i][j] != 0 && arr5[i][j-1] == 0) || (((arr5[i][j] == arr5[i][j-1]) && arr5[i][j] != 0 ) && (checkarr5[i][j] ==0 &&checkarr5[i][j-1] == 0) )){
+                    check++;
+                }
+            }
+        }
+        if(check == 0){
+            _resetcheckarr5x5();
+            break;
+        }
+    }
+}
+
 void _logics4x4(){
     while(1){
         for(int i=2;i>=0;i--){
@@ -375,6 +465,44 @@ void _logics4x4(){
         }
         if(check == 0){
             _resetcheckarr4x4();
+            break;
+        }
+    }
+}
+
+void _logics5x5(){
+    while(1){
+        for(int i=3;i>=0;i--){
+            for(int j=0;j<5;j++){
+                if(arr5[i+1][j] == 0){
+                    arr5[i+1][j] = arr5[i][j];
+                    arr5[i][j] = 0;
+                    checkarr5[i+1][j] = checkarr5[i][j];
+                    checkarr5[i][j] = 0;
+                    checkifchanged++;
+                }
+                else if(arr5[i+1][j] != 0){
+                    if(arr5[i+1][j] == arr5[i][j]){
+                        arr5[i+1][j] = arr5[i][j]*2;
+                        arr5[i][j] = 0;
+                        checkarr5[i+1][j] = 1;
+                        checkarr5[i][j] = 0;
+                        checkifchanged++;
+                        _scoreadd5x5(arr5[i+1][j]);
+                    }
+                }
+            }
+        }
+        int check = 0;
+        for(int i=0;i<4;i++){
+            for(int j=0;j<5;j++){
+                if((arr5[i][j] != 0 && arr5[i+1][j] == 0) || (((arr5[i][j] == arr5[i+1][j]) && arr5[i][j] != 0 ) && (checkarr5[i][j] ==0 &&checkarr5[i+1][j] == 0) )){
+                    check++;
+                }
+            }
+        }
+        if(check == 0){
+            _resetcheckarr5x5();
             break;
         }
     }
@@ -418,6 +546,44 @@ void _logicd4x4(){
     }
 }
 
+void _logicd5x5(){
+    while(1){
+        for(int i=0;i<5;i++){
+            for(int j=3;j>=0;j--){
+                if(arr5[i][j+1] == 0){
+                    arr5[i][j+1] = arr5[i][j];
+                    arr5[i][j] = 0;
+                    checkarr5[i][j+1] = checkarr5[i][j];
+                    checkarr5[i][j] = 0;
+                    checkifchanged++;
+                }
+                else if(arr5[i][j+1] != 0){
+                    if(arr5[i][j+1] == arr5[i][j]){
+                        arr5[i][j+1] = arr5[i][j]*2;
+                        arr5[i][j] = 0;
+                        checkarr5[i][j+1] = 1;
+                        checkarr5[i][j] = 0;
+                        checkifchanged++;
+                        _scoreadd5x5(arr5[i][j+1]);
+                    }
+                }
+            }
+        }
+        int check = 0;
+        for(int i=0;i<5;i++){
+            for(int j=0;j<4;j++){
+                if((arr5[i][j] != 0 && arr5[i][j+1] == 0) || (((arr5[i][j] == arr5[i][j+1]) && arr5[i][j] != 0 ) && (checkarr5[i][j] ==0 &&checkarr5[i][j+1] == 0) )){
+                    check++;
+                }
+            }
+        }
+        if(check == 0){
+            _resetcheckarr5x5();
+            break;
+        }
+    }
+}
+
 void _logicaddnewnum4x4(){
     int n = rand()%10;
     int howmanyadd;
@@ -434,11 +600,27 @@ void _logicaddnewnum4x4(){
     arr4[newpos1/4][newpos1%4] = newnum1;
 }
 
+void _logicaddnewnum5x5(){
+    int n = rand()%10;
+    int howmanyadd;
+    if(0<=n && n <= 6) howmanyadd = 1;
+    else howmanyadd = 0;
+    int newpos1;
+    int newnum1 = random2or4();
+    while(1){
+        newpos1 = random16();
+        if(arr5[newpos1/5][newpos1%5] == 0){
+            break;
+        }
+    }
+    arr5[newpos1/5][newpos1%5] = newnum1;
+}
+
 int _checkifclear4x4(){
     int check = 0;
     for(int i=0;i<4;i++){
         for(int j=0;j<4;j++){
-            if(arr4[i][j] == 16){
+            if(arr4[i][j] == 2048){
                 check = 1;
             }
         }
@@ -447,7 +629,20 @@ int _checkifclear4x4(){
     else return 0;
 }
 
-void _printclearscreen(int n){
+int _checkifclear5x5(){
+    int check = 0;
+    for(int i=0;i<5;i++){
+        for(int j=0;j<5;j++){
+            if(arr5[i][j] == 2048){
+                check = 1;
+            }
+        }
+    }
+    if(check == 1) return 1;
+    else return 0;
+}
+
+void _printclearscreen4x4(int n){
     system("cls");
     gotoxy(45,5);
     printf("_________                                     __        .__          __  .__           ");
@@ -469,6 +664,29 @@ void _printclearscreen(int n){
 
 }
 
+
+void _printclearscreen5x5(int n){
+    system("cls");
+    gotoxy(45,5);
+    printf("_________                                     __        .__          __  .__           ");
+    gotoxy(45,6);
+    printf("\\_   ___ \\  ____   ____    ________________ _/  |_ __ __|  | _____ _/  |_|__| ____   ____  ");
+    gotoxy(45,7);
+    printf("/    \\  \\/ /  _ \\ /    \\  / ___\\_  __ \\__  \\\\   __\\  |  \\  | \\__  \\\\   __\\  |/  _ \\ /    \\ ");
+    gotoxy(45,8);
+    printf("\\     \\___(  <_> )   |  \\/ /_/  >  | \\// __ \\|  | |  |  /  |__/ __ \\|  | |  (  <_> )   |  \\");
+    gotoxy(45,9);
+    printf(" \\______  /\\____/|___|  /\\___  /|__|  (____  /__| |____/|____(____  /__| |__|\\____/|___|  /");
+    gotoxy(45,10);
+    printf("        \\/            \\//_____/            \\/                     \\/                    \\/ ");
+    gotoxy(62,15);
+    printf("Your Score : %d",score5x5);
+    gotoxy(98,15);
+    if(score5x5 > highscore5x5) highscore5x5 = score5x5;
+    printf("High Score : %d",highscore5x5);
+
+}
+
 void _print4x4(){
     for(int i=0;i<4;i++){
         for(int j=0;j<4;j++){
@@ -478,6 +696,17 @@ void _print4x4(){
     }
     printf("\n");
     printf("score : %d\n",score4x4);
+}
+
+void _print5x5(){
+    for(int i=0;i<5;i++){
+        for(int j=0;j<5;j++){
+            printf("%d ",arr5[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+    printf("score : %d\n",score5x5);
 }
 
 void _play4x4(){
@@ -515,7 +744,50 @@ void _play4x4(){
         _print4x4();
         int ischecked = _checkifclear4x4();
         if(ischecked == 1){
-            _printclearscreen(4);
+            _printclearscreen4x4(4);
+            break;
+        }
+    }
+}
+
+void _play5x5(){
+    // 31~50, 51~70, 71~90, 91~110
+    // 3~12, 13~22, 23~32, 33~42
+    int rowstart = 30;
+    int rowend = 112;
+    int columnstart = 2;
+    int columnend = 44;
+    //_write4x4standard(rowstart,rowend,columnstart,columnend);
+    int startingpos1=random16();
+    int startingpos2=random16();
+    int startingnum1 = random2or4();
+    int startingnum2 = random2or4();
+    arr5[startingpos1 / 5][startingnum1 % 5] = startingnum1;
+    arr5[startingpos2 / 5][startingnum2 % 5] = startingnum2;
+    _print5x5();
+    while(1){
+        char inputkey;
+        inputkey = _getch();
+        if(inputkey == 'w'){
+            _logicw5x5();
+        }
+        else if(inputkey == 'a'){
+            _logica5x5();
+        }
+        else if(inputkey == 's'){
+            _logics5x5();
+        }
+        else if(inputkey == 'd'){
+            _logicd5x5();
+        }
+        if(checkifchanged != 0){
+            _logicaddnewnum5x5();
+        }
+        checkifchanged = 0;
+        _print5x5();
+        int ischecked = _checkifclear5x5();
+        if(ischecked == 1){
+            _printclearscreen5x5(5);
             break;
         }
     }
@@ -534,6 +806,6 @@ int main(){
         _play4x4();
     }
     else{
-        //_play5x5();
+        _play5x5();
     }
 }
