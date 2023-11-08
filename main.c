@@ -10,6 +10,7 @@ int arr4[4][4];
 int arr5[5][5];
 int checkarr4[4][4];
 int checkarr5[5][5];
+int checkifchanged=0;
 char numbers[15][10][10];
 void gotoxy(int x, int y){
     COORD Pos = {x,y};
@@ -268,6 +269,7 @@ void _logicw4x4(){
                     arr4[i][j] = 0;
                     checkarr4[i-1][j] = checkarr4[i][j];
                     checkarr4[i][j] = 0;
+                    checkifchanged++;
                 }
                 else if(arr4[i-1][j] != 0){
                     if(arr4[i-1][j] == arr4[i][j]){
@@ -275,6 +277,7 @@ void _logicw4x4(){
                         arr4[i][j] = 0;
                         checkarr4[i-1][j] = 1;
                         checkarr4[i][j] = 0;
+                        checkifchanged++;
                     }
                 }
             }
@@ -303,6 +306,7 @@ void _logica4x4(){
                     arr4[i][j] = 0;
                     checkarr4[i][j-1] = checkarr4[i][j];
                     checkarr4[i][j] = 0;
+                    checkifchanged++;
                 }
                 else if(arr4[i][j-1] != 0){
                     if(arr4[i][j-1] == arr4[i][j]){
@@ -310,6 +314,7 @@ void _logica4x4(){
                         arr4[i][j] = 0;
                         checkarr4[i][j-1] = 1;
                         checkarr4[i][j] = 0;
+                        checkifchanged++;
                     }
                 }
             }
@@ -338,6 +343,7 @@ void _logics4x4(){
                     arr4[i][j] = 0;
                     checkarr4[i+1][j] = checkarr4[i][j];
                     checkarr4[i][j] = 0;
+                    checkifchanged++;
                 }
                 else if(arr4[i+1][j] != 0){
                     if(arr4[i+1][j] == arr4[i][j]){
@@ -345,6 +351,7 @@ void _logics4x4(){
                         arr4[i][j] = 0;
                         checkarr4[i+1][j] = 1;
                         checkarr4[i][j] = 0;
+                        checkifchanged++;
                     }
                 }
             }
@@ -373,6 +380,7 @@ void _logicd4x4(){
                     arr4[i][j] = 0;
                     checkarr4[i][j+1] = checkarr4[i][j];
                     checkarr4[i][j] = 0;
+                    checkifchanged++;
                 }
                 else if(arr4[i][j+1] != 0){
                     if(arr4[i][j+1] == arr4[i][j]){
@@ -380,6 +388,7 @@ void _logicd4x4(){
                         arr4[i][j] = 0;
                         checkarr4[i][j+1] = 1;
                         checkarr4[i][j] = 0;
+                        checkifchanged++;
                     }
                 }
             }
@@ -404,36 +413,15 @@ void _logicaddnewnum4x4(){
     int howmanyadd;
     if(0<=n && n <= 6) howmanyadd = 1;
     else howmanyadd = 0;
-
     int newpos1;
-    int newpos2;
     int newnum1 = random2or4();
-    int newnum2 = random2or4();
-    if(howmanyadd == 2){
-        while(1){
-            newpos1 = random16();
-            if(arr4[newpos1/4][newpos1%4] == 0){
-                break;
-            }
+    while(1){
+        newpos1 = random16();
+        if(arr4[newpos1/4][newpos1%4] == 0){
+            break;
         }
-        arr4[newpos1/4][newpos1%4] = newnum1;
-        while(1){
-            newpos2 = random16();
-            if(arr4[newpos2/4][newpos2%4] == 0){
-                break;
-            }
-        }
-        arr4[newpos2/4][newpos2%4] = newnum2;
     }
-    else if(howmanyadd == 1){
-        while(1){
-            newpos1 = random16();
-            if(arr4[newpos1/4][newpos1%4] == 0){
-                break;
-            }
-        }
-        arr4[newpos1/4][newpos1%4] = newnum1;
-    }
+    arr4[newpos1/4][newpos1%4] = newnum1;
 }
 
 void _print4x4(){
@@ -475,7 +463,8 @@ void _play4x4(){
         else if(inputkey == 'd'){
             _logicd4x4();
         }
-        _logicaddnewnum4x4();
+        if(checkifchanged != 0) _logicaddnewnum4x4();
+        checkifchanged = 0;
         _print4x4();
     }
 }
